@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sheet Metal Bending Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f4f6f9; }
+    h2 { color: #222; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input { padding: 6px; width: 140px; border: 1px solid #ccc; border-radius: 4px; }
+    button { margin-top: 20px; padding: 10px 20px; background: #0077cc; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #005fa3; }
+    .result { margin-top: 25px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    .footer { margin-top: 40px; font-size: 0.9em; color: #555; text-align: center; }
+    img { display: block; margin: 25px auto; max-width: 400px; border: 1px solid #ccc; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h2>📐 Sheet Metal Bending Calculator</h2>
+
+  <label>Sheet thickness s [mm]:</label>
+  <input type="number" id="thickness" step="0.01">
+
+  <label>Bend radius r [mm]:</label>
+  <input type="number" id="radius" step="0.01">
+
+  <label>Bend angle β [°]:</label>
+  <input type="number" id="angle" step="0.1">
+
+  <label>Leg length a [mm]:</label>
+  <input type="number" id="legA" step="0.1">
+
+  <label>Leg length b [mm]:</label>
+  <input type="number" id="legB" step="0.1">
+
+  <br>
+  <button onclick="calculate()">Calculate</button>
+
+  <!-- Bild einfügen -->
+  <img src="sheet metal pic.jpg" alt="Sheet metal bending diagram">
+
+  <div class="result" id="result"></div>
+
+  <div class="footer">
+    Developed by Zaher Taleb
+  </div>
+
+  <script>
+    function calculate() {
+      const s = parseFloat(document.getElementById("thickness").value);
+      const r = parseFloat(document.getElementById("radius").value);
+      const beta = parseFloat(document.getElementById("angle").value);
+      const a = parseFloat(document.getElementById("legA").value);
+      const b = parseFloat(document.getElementById("legB").value);
+
+      if (isNaN(s) || isNaN(r) || isNaN(beta) || isNaN(a) || isNaN(b)) {
+        document.getElementById("result").innerHTML = "⚠️ Please enter valid numbers.";
+        return;
+      }
+
+      // --- Calculation ---
+      const k = 0.65 + 0.5 * Math.log10(r / s);
+      let v = 0;
+      if (beta <= 90) {
+        v = 2 * (r + s) - Math.PI * (r + (s / 2) * k) * ((180 - beta) / 180);
+      } else if (beta <= 165) {
+        v = 2 * (r + s) * Math.tan((beta / 2) * Math.PI / 180) - Math.PI * (r + (s / 2) * k) * ((180 - beta) / 180);
+      }
+
+      const L = a + b - v; // Flat length
+
+      document.getElementById("result").innerHTML = `
+        <b>F-Factor:</b> ${k.toFixed(3)} <br>
+        <b>BD, Bend Deduction v:</b> ${v.toFixed(3)} mm <br>
+        <b>Flat length L:</b> ${L.toFixed(3)} mm
+      `;
+    }
+  </script>
+</body>
+</html>
