@@ -4,47 +4,176 @@
   <meta charset="UTF-8">
   <title>Sheet Metal Bending Calculator</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f4f6f9; }
-    h2 { color: #222; }
-    label { display: block; margin-top: 10px; font-weight: bold; }
-    input { padding: 6px; width: 140px; border: 1px solid #ccc; border-radius: 4px; }
-    button { margin-top: 20px; padding: 10px 20px; background: #0077cc; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #005fa3; }
-    .result { margin-top: 25px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
-    .footer { margin-top: 40px; font-size: 0.9em; color: #555; text-align: center; }
-    img { display: block; margin: 25px auto; max-width: 400px; border: 1px solid #ccc; border-radius: 8px; }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f3f2ef;
+      color: #333;
+    }
+
+    header {
+      background: #0a66c2; /* LinkedIn Blue */
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+      font-size: 1.7em;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #0a66c2;
+      font-size: 1.4em;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: #0a66c2;
+      box-shadow: 0 0 6px rgba(10,102,194,0.3);
+      outline: none;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 14px 20px;
+      background: #0a66c2;
+      color: white;
+      font-size: 1.1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #004182;
+      transform: scale(1.02);
+    }
+
+    .yt-button {
+      margin-top: 20px;
+      background: #ff0000;
+      color: white;
+      border-radius: 8px;
+    }
+
+    .yt-button:hover {
+      background: #cc0000;
+    }
+
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #eef3f8;
+      border-left: 6px solid #0a66c2;
+      border-radius: 8px;
+      font-size: 1.1em;
+      line-height: 1.6;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    img {
+      display: block;
+      margin: 30px auto;
+      max-width: 85%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #555;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #0a66c2;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <h2>📐 Sheet Metal Bending Calculator</h2>
+  <header>
+    📐 Sheet Metal Bending Calculator
+  </header>
 
-  <label>Sheet thickness s [mm]:</label>
-  <input type="number" id="thickness" step="0.01">
+  <div class="container">
+    <h2>Input Parameters / Eingabeparameter</h2>
 
-  <label>Bend radius R [mm]:</label>
-  <input type="number" id="radius" step="0.01">
+    <label>Sheet thickness <b>s</b> [mm] / Blechdicke</label>
+    <input type="number" id="thickness" step="0.1">
 
-  <label>Bend angle β [°]:</label>
-  <input type="number" id="angle" step="0.1">
+    <label>Bend radius <b>R</b> [mm] / Biegeradius</label>
+    <input type="number" id="radius" step="0.1">
 
-  <label>Leg length a [mm]:</label>
-  <input type="number" id="legA" step="0.1">
+    <label>Bend angle <b>β</b> [°] / Biegewinkel</label>
+    <input type="number" id="angle" step="5" value="90">
 
-  <label>Leg length b [mm]:</label>
-  <input type="number" id="legB" step="0.1">
+    <label>Leg length <b>a</b> [mm] / Schenkel A</label>
+    <input type="number" id="legA" step="0.1">
 
-  <br>
-  <button onclick="calculate()">Calculate</button>
+    <label>Leg length <b>b</b> [mm] / Schenkel B</label>
+    <input type="number" id="legB" step="0.1">
 
-  <!-- Bild von GitHub laden -->
-  <img src="https://github.com/zahirorr/Sheet-metal-bending-calculator/blob/main/sheet%20metal%20pic.jpg?raw=true" alt="Sheet metal bending diagram">
+    <button onclick="calculate()">🔹 Calculate / Berechnen</button>
 
-  <div class="result" id="result"></div>
 
-  <div class="footer">
-    Developed by Eng.Zaher Taleb
+
+    <img src="https://github.com/zahirorr/Sheet-metal-bending-calculator/blob/main/sheet%20metal%20pic.jpg?raw=true" alt="Sheet metal bending diagram">
+
+    <div class="result" id="result">
+      ⚙️ Please enter values above and press "Calculate". <br>
+      ⚙️ Bitte Werte eingeben und auf "Berechnen" klicken.
+    </div>
   </div>
 
+  <div class="footer">
+    Developed by <b>Eng. Zaher Taleb</b> |  
+    🎥 <a href="https://www.youtube.com/@Zaher.Taleb.mechanical.design" target="_blank">Visit my YouTube Channel</a>
+  </div>
+    <button class="yt-button" onclick="window.open('https://www.youtube.com/@Zaher.Taleb.mechanical.design','_blank')">
+      🎥 Watch Tutorial on YouTube
+    </button>
   <script>
     function calculate() {
       const s = parseFloat(document.getElementById("thickness").value);
@@ -59,7 +188,7 @@
       }
 
       // --- Calculation ---
-      const k = 0.65 + 0.5 * Math.log10(r / s);
+      const k = 0.65 + 0.5 * Math.log10(r / s); // using log base 10
       let v = 0;
       if (beta <= 90) {
         v = 2 * (r + s) - Math.PI * (r + (s / 2) * k) * ((180 - beta) / 180);
@@ -70,13 +199,11 @@
       const L = a + b - v; // Flat length
 
       document.getElementById("result").innerHTML = `
-        <b>F-Factor:</b> ${k.toFixed(3)} <br>
-        <b>BD, Bend Deduction v:</b> ${v.toFixed(3)} mm <br>
-        <b>Flat length L:</b> ${L.toFixed(3)} mm
+        ✅ <b>K-Factor:</b> ${k.toFixed(3)} <br>
+        ✅ <b>Bend Deduction (v):</b> ${v.toFixed(3)} mm <br>
+        ✅ <b>Flat length (L):</b> ${L.toFixed(3)} mm
       `;
     }
   </script>
 </body>
 </html>
-
-
